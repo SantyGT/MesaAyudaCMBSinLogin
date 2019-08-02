@@ -17,8 +17,12 @@
                 <f:param name="i" value="0" />
             </p:menuitem>
             
-            <p:menuitem value="Usuario" outcome="usuario" >
+            <p:menuitem value="Usuarios" outcome="usuario" >
                 <f:param name="i" value="1" />
+            </p:menuitem>
+            
+            <p:menuitem value="Estados" outcome="estado" >
+                <f:param name="i" value="2" />
             </p:menuitem>
             
         </p:tabMenu>
@@ -46,11 +50,11 @@
                 <p:dataTable  paginator="true" rows="10" emptyMessage="No data row" id="tabla" value="#{areaBean.lista}" var="item">
                     
                     <p:column sortBy="#{item.id_area}" headerText="Id Area">
-                        <h:outputText  value="#{item.id_area}"></h:outputText>
+                        <h:outputText value="#{item.id_area}"></h:outputText>
                     </p:column>
                     
                     <p:column sortBy="#{item.nombre_area}" headerText="Nombre Area">
-                        <h:outputText  value="#{item.nombre_area}"></h:outputText>
+                        <h:outputText value="#{item.nombre_area}"></h:outputText>
                     </p:column>
                     
                     
