@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <h:head>
+        <title>CLIMABER</title>
+    </h:head>
+    <h:body>
+        
+        <p:tabMenu activeIndex="#{param.i}">
+            <p:menuitem value="Menú" outcome="index" >
+                <f:param name="i" value="0" />
+            </p:menuitem>
+            
+            <p:menuitem value="Usuario" outcome="usuario" >
+                <f:param name="i" value="1" />
+            </p:menuitem>
+            
+        </p:tabMenu>
+        
+        <h:form>
+           <p:panel header="Menú Areas">
+                <f:facet name="footer" >
+                    <p:commandButton icon="ui-icon-disk" update="tabla,@form" id="btnGuardar" actionListener="#{areaBean.save()}" ></p:commandButton>
+                    <p:commandButton icon="ui-icon-refresh" update="tabla,@form" id="btnActualizar" actionListener="#{areaBean.update()}" ></p:commandButton>
+                    <p:commandButton icon="ui-icon-trash" update="tabla,@form" id="btnEliminar" actionListener="#{areaBean.delete()}" ></p:commandButton>
+                </f:facet>
+               
+               <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+                   
+                   <p:outputLabel for="id_area">Id Area</p:outputLabel>
+                    <p:inputText id="id_area" readonly="true" value="#{areaBean.area.id_area}" style="width: 100% !important;" ></p:inputText>
+                   
+                    <p:outputLabel for="nombre_area">Nombre Area</p:outputLabel>
+                    <p:inputText id="nombre_area" placeholder="Digite el nombre del area" style="width: 100% !important;" value="#{areaBean.area.nombre_area}" ></p:inputText>
+                    
+                </h:panelGrid>
+            </p:panel>
+            
+            <p:panel header="Listado Areas">
+                <p:dataTable  paginator="true" rows="10" emptyMessage="No data row" id="tabla" value="#{areaBean.lista}" var="item">
+                    
+                    <p:column sortBy="#{item.id_area}" headerText="Id Area">
+                        <h:outputText  value="#{item.id_area}"></h:outputText>
+                    </p:column>
+                    
+                    <p:column sortBy="#{item.nombre_area}" headerText="Nombre Area">
+                        <h:outputText  value="#{item.nombre_area}"></h:outputText>
+                    </p:column>
+                    
+                    
+                    <p:column style="width:100px;text-align: center" headerText="Cargar">
+                        <p:commandButton update="@form" process="@this" actionListener="#{areaBean.changeMode()}" icon="fa fa-eye Fs16 white" title="View">
+                            <f:setPropertyActionListener value="#{item}" target="#{areaBean.area}" />
+                        </p:commandButton>
+                    </p:column>
+                    
+                    
+                </p:dataTable>
+            </p:panel>
+        </h:form>
+    </h:body>
+</html>

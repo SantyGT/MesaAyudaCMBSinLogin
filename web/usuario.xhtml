@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <h:head>
+        <title>PryInmobiSoft</title>
+    </h:head>
+    <h:body>
+        
+        <p:tabMenu activeIndex="#{param.i}">
+            <p:menuitem value="Menú" outcome="index" >
+                <f:param name="i" value="0" />
+            </p:menuitem>
+            
+            <p:menuitem value="Area" outcome="area" >
+                <f:param name="i" value="1" />
+            </p:menuitem>
+            
+        </p:tabMenu>
+        
+        <h:form>
+            <p:panel header="Menú Usuarios">
+                <f:facet name="footer">
+                    <p:commandButton icon="ui-icon-disk" update="tabla,@form" id="btnGuardar" actionListener="#{usuarioBean.save()}" ></p:commandButton>
+                    <p:commandButton icon="ui-icon-refresh" update="tabla,@form" id="btnActualizar" actionListener="#{usuarioBean.update()}" ></p:commandButton>
+                    <p:commandButton icon="ui-icon-trash" update="tabla,@form" id="btnEliminar" actionListener="#{usuarioBean.delete()}" ></p:commandButton>
+                </f:facet>
+               
+                <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+                   
+                   <p:outputLabel for="iduser">Id</p:outputLabel>
+                   <p:inputText id="iduser" readonly="true" style="width: 100% !important;" value="#{usuarioBean.usuario.iduser}"></p:inputText>
+                   
+                    <p:outputLabel for="nombre_usuario">Nombre Usuario</p:outputLabel>
+                    <p:inputText id="nombre_usuario" placeholder="Digite el nombre" style="width: 100% !important;" value="#{usuarioBean.usuario.nombre_usuario}"></p:inputText>
+                    
+                    <p:outputLabel for="cedula_usuario">Cedula Usuario</p:outputLabel>
+                    <p:inputText id="cedula_usuario" placeholder="Digite la cedula" style="width: 100% !important;" value="#{usuarioBean.usuario.cedula_usuario}"></p:inputText>
+                    
+                    <p:outputLabel for="correo">Correo</p:outputLabel>
+                    <p:inputText id="correo"  placeholder="Digite el Correo" style="width: 100% !important;" value="#{usuarioBean.usuario.correo}"></p:inputText>
+                    
+                    <p:outputLabel for="clave">Clave</p:outputLabel>
+                    <p:inputText id="clave" placeholder="Digite la Clave" style="width: 100% !important;" value="#{usuarioBean.usuario.clave}"></p:inputText>
+                    
+                    <p:outputLabel for="estado_usuario">Estado Usuario</p:outputLabel>
+                    <p:inputText id="estado_usuario" placeholder="Digite el estado" style="width: 100% !important;" value="#{usuarioBean.usuario.estado_usuario}"></p:inputText>
+
+                </h:panelGrid>
+            </p:panel>
+            
+            <p:panel header="Listado Usuarios">
+                <p:dataTable paginator="true" rows="10" emptyMessage="No data row" id="tabla" value="#{usuarioBean.lista}" var="item">
+                    
+                    <p:column sortBy="#{item.iduser}" headerText="Id">
+                        <h:outputText value="#{item.iduser}"></h:outputText>
+                    </p:column>
+                    
+                    <p:column sortBy="#{item.nombre_usuario}" headerText="Nombre Usuario">
+                        <h:outputText value="#{item.nombre_usuario}"></h:outputText>
+                    </p:column>
+                    
+                    <p:column sortBy="#{item.cedula_usuario}" headerText="Cedula Usuario">
+                        <h:outputText value="#{item.cedula_usuario}"></h:outputText>
+                    </p:column>
+                    
+                    <p:column sortBy="#{item.correo}" headerText="Correo">
+                        <h:outputText value="#{item.correo}"></h:outputText>
+                    </p:column>
+                    
+                    <p:column sortBy="#{item.clave}" headerText="Clave">
+                        <h:outputText value="#{item.clave}"></h:outputText>
+                    </p:column>
+                    
+                    <p:column sortBy="#{item.estado_usuario}" headerText="Estado Usuario">
+                        <h:outputText value="#{item.estado_usuario}"></h:outputText>
+                    </p:column>
+                    
+                    <p:column style="width:100px; text-align: center" headerText="Cargar">
+                        <p:commandButton update="@form" process="@this" actionListener="#{usuarioBean.changeMode()}" icon="ui-icon-search" title="View">
+                            <f:setPropertyActionListener value="#{item}" target="#{usuarioBean.usuario}" />
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+            </p:panel>
+        </h:form>
+    </h:body>
+</html>

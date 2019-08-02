@@ -1,0 +1,17 @@
+{
+    "elements": {
+        "p:messages": {},
+        "p:panel": {},
+        "p:inputText": {},
+        "p:outputLabel": {},
+        "p:commandButton": {},
+        "p:column": {},
+        "f:facet": {},
+        "f:setPropertyActionListener": {},
+        "h:outputText": {},
+        "h:form": {},
+        "p:panelGrid": {},
+        "p:dataTable": {}
+    },
+    "attributes": {}
+}
