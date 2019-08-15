@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <h:head>
+        <title>CLIMABER</title>
+    </h:head>
+    <h:body>
+        
+        <p:tabMenu activeIndex="#{param.i}">
+            <p:menuitem value="Menú" outcome="index" >
+                <f:param name="i" value="0" />
+            </p:menuitem>
+            
+            <p:menuitem value="Solicitud Software" outcome="solicitud_software" >
+                <f:param name="i" value="1" />
+            </p:menuitem>
+            
+            <p:menuitem value="Solicitud Hardware" outcome="solicitud_hardware" >
+                <f:param name="i" value="2" />
+            </p:menuitem>
+            
+            <p:menuitem value="Area" outcome="area" >
+                <f:param name="i" value="3" />
+            </p:menuitem>
+            
+            <p:menuitem value="Estados" outcome="estado" >
+                <f:param name="i" value="4" />
+            </p:menuitem>
+                        
+            <p:menuitem value="Hardware" outcome="hardware" >
+                <f:param name="i" value="5" />
+            </p:menuitem>
+            
+            <p:menuitem value="Software" outcome="software" >
+                <f:param name="i" value="6" />
+            </p:menuitem>
+                        
+            <p:menuitem value="Tipo" outcome="tipo" >
+                <f:param name="i" value="7" />
+            </p:menuitem>
+            
+            <p:menuitem value="Usuarios" outcome="usuario" >
+                <f:param name="i" value="8" />
+            </p:menuitem>
+            
+            <p:menuitem value="Cargo" outcome="cargo" >
+                <f:param name="i" value="9" />
+            </p:menuitem>
+            
+        </p:tabMenu>
+        
+        <h:form>
+           <p:panel header="Menú Solicitud">
+                <f:facet name="footer" >
+                    <p:commandButton icon="ui-icon-disk" update="tabla,@form" id="btnGuardar" actionListener="#{solicitudBean.save()}" ></p:commandButton>
+                    <p:commandButton icon="ui-icon-refresh" update="tabla,@form" id="btnActualizar" actionListener="#{solicitudBean.update()}" ></p:commandButton>
+                    <p:commandButton icon="ui-icon-trash" update="tabla,@form" id="btnEliminar" actionListener="#{solicitudBean.delete()}" ></p:commandButton>
+                </f:facet>
+               
+               <h:panelGrid id="grid" columns="6" style="margin-bottom:10px" cellpadding="5" >
+                   
+                    <p:outputLabel for="id_solicitud" >Id Solicitud</p:outputLabel>
+                    <p:inputText id="id_solicitud" readonly="true" value="#{solicitudBean.solicitud.id_solicitud}" style="width:240px" ></p:inputText>
+                                                                                
+                    <p:outputLabel for="fecha_solicitud">Fecha Solicitud</p:outputLabel>
+                    <p:calendar id="fecha_solicitud" required="true" value="#{solicitudBean.solicitud.fecha_solicitud}" showOn="button" />
+                                        
+                    <p:outputLabel >Area</p:outputLabel>
+                    <p:selectOneMenu value="#{solicitudBean.solicitud.id_area}" filter="true" filterMatchMode="contains" style="width:250px">
+                        <f:selectItem itemLabel="Seleccione" itemValue="" />
+                        <f:selectItems value="#{areaBean.lista}" var="area" itemLabel="#{area.nombre_area}" itemValue="#{area.id_area}" />
+                    </p:selectOneMenu>
+                                       
+                    <p:outputLabel >Usuario</p:outputLabel>
+                    <p:selectOneMenu value="#{solicitudBean.solicitud.id_usuario}" filter="true" filterMatchMode="contains" style="width:250px">
+                        <f:selectItem itemLabel="Seleccione" itemValue="" />
+                        <f:selectItems value="#{usuarioBean.lista}" var="usuario" itemLabel="#{usuario.nombre_usuario}" itemValue="#{usuario.iduser}" />
+                    </p:selectOneMenu>
+                    
+                    <p:outputLabel for="cargo_solicitud" >Cargos</p:outputLabel>
+                    <p:selectOneMenu id="cargo_solicitud" value="#{solicitudBean.solicitud.cargo_solicitud}" style="width:250px">
+                        <f:selectItem itemLabel="Seleccione" itemValue="" />
+                        <f:selectItems value="#{cargoBean.lista}" var="cargo" itemLabel="#{cargo.nombre_cargo}" itemValue="#{cargo.id_cargo}" />
+                    </p:selectOneMenu>
+                    
+                    <p:outputLabel for="asunto_solicitud">Asunto Solicitud</p:outputLabel>
+                    <p:inputText id="asunto_solicitud" placeholder="Digite el asunto de la solicitud" value="#{solicitudBean.solicitud.asunto_solicitud}" style="width:240px" >
+                        <f:validateLength maximum="20" />
+                    </p:inputText>
+                    
+                    <p:outputLabel >Estado</p:outputLabel>
+                    <p:selectOneMenu value="#{solicitudBean.solicitud.id_estado}" filter="true" filterMatchMode="contains" style="width:250px">
+                        <f:selectItem itemLabel="Seleccione" itemValue="" />
+                        <f:selectItems value="#{estadoBean.lista}" var="estado" itemLabel="#{estado.estado}" itemValue="#{estado.id_estado}" />
+                    </p:selectOneMenu>
+                    
+                    <p:outputLabel for="tipo_solicitud" >Tipo Solicitud</p:outputLabel>
+                    <p:selectOneMenu id="tipo_solicitud" value="#{solicitudBean.solicitud.id_tipo_solicitud}" style="width:250px">
+                        <f:selectItem itemLabel="HARDWARE" itemValue="2" />
+                    </p:selectOneMenu>
+                    
+                    <p:outputLabel >Lista Hardware</p:outputLabel>
+                    <p:selectOneMenu value="#{solicitudBean.solicitud.id_lista_solicitud}" filter="true" filterMatchMode="contains" style="width:250px" >
+                        <f:selectItem itemLabel="Seleccione" itemValue="" />
+                        <f:selectItems value="#{hardwareBean.lista}" var="hardware" itemLabel="#{hardware.nombre_sol_hard}" itemValue="#{hardware.id_sol_hard}" />
+                    </p:selectOneMenu>
+                    
+                    <p:outputLabel for="observacion">Observación</p:outputLabel>
+                    <p:inputTextarea id="observacion" placeholder="Digite una observacion si la tiene" value="#{solicitudBean.solicitud.observacion}" style="width:240px; height: 40px " >
+                        <f:validateLength maximum="40" />
+                    </p:inputTextarea>
+                    
+                </h:panelGrid>
+            </p:panel>
+            
+
+            
+            <p:panel header="Listado Solicitud">
+                <p:dataTable paginator="true" rows="10" emptyMessage="No data row" id="tabla" value="#{solicitudBean.lista}" var="item">
+                    
+                    <p:column sortBy="#{item.id_solicitud}" headerText="Id Solicitud">
+                        <h:outputText value="#{item.id_solicitud}"></h:outputText>
+                    </p:column>
+                    
+                    <p:column  headerText="Fecha Solicitud">
+                        <h:outputText value="#{item.fecha_solicitud}"></h:outputText>
+                    </p:column>
+                    
+                    <p:column headerText="Id Area">
+                        <h:outputText value="#{item.id_area}"></h:outputText>
+                    </p:column>
+                    
+                    <p:column headerText="Id Usuario">
+                        <h:outputText value="#{item.id_usuario}"></h:outputText>
+                    </p:column>
+                    
+                    <p:column headerText="Cargo Usuario">
+                        <h:outputText value="#{item.cargo_solicitud}"></h:outputText>
+                    </p:column>
+                    
+                    <p:column headerText="Asunto Solicitud">
+                        <h:outputText value="#{item.asunto_solicitud}"></h:outputText>
+                    </p:column>
+                    
+                    <p:column headerText="Observación">
+                        <h:outputText value="#{item.observacion}"></h:outputText>
+                    </p:column>
+                    
+                    <p:column headerText="Id Estado">
+                        <h:outputText value="#{item.id_estado}"></h:outputText>
+                    </p:column>
+                    
+                    <p:column headerText="Id Tipo Solicitud">
+                        <h:outputText value="#{item.id_tipo_solicitud}"></h:outputText>
+                    </p:column>
+                    
+                    <p:column headerText="Lista Solicitud">
+                        <h:outputText value="#{item.id_lista_solicitud}"></h:outputText>
+                    </p:column>
+                                        
+                    <p:column style="width:100px;text-align: center" headerText="Cargar">
+                        <p:commandButton update="@form" process="@this" actionListener="#{solicitudBean.changeMode()}" icon="fa fa-eye Fs16 white" title="View">
+                            <f:setPropertyActionListener value="#{item}" target="#{solicitudBean.solicitud}" />
+                        </p:commandButton>
+                    </p:column>
+                    
+                    
+                </p:dataTable>
+            </p:panel>
+        </h:form>
+    </h:body>
+</html>
