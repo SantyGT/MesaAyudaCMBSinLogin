@@ -24,7 +24,30 @@
             <p:menuitem value="Estados" outcome="estado" >
                 <f:param name="i" value="2" />
             </p:menuitem>
+                        
+            <p:menuitem value="Hardware" outcome="hardware" >
+                <f:param name="i" value="3" />
+            </p:menuitem>
             
+            <p:menuitem value="Software" outcome="software" >
+                <f:param name="i" value="4" />
+            </p:menuitem>
+                        
+            <p:menuitem value="Tipos" outcome="tipo" >
+                <f:param name="i" value="5" />
+            </p:menuitem>
+            
+            <p:menuitem value="Usuarios" outcome="usuario" >
+                <f:param name="i" value="6" />
+            </p:menuitem>
+            
+            <p:menuitem value="Cargos" outcome="cargo" >
+                <f:param name="i" value="7" />
+            </p:menuitem>
+            
+            <p:menuitem value="Estado Usuarios" outcome="estado_usuario" >
+                <f:param name="i" value="8" />
+            </p:menuitem>
         </p:tabMenu>
         
         <h:form>
@@ -35,26 +58,41 @@
                     <p:commandButton icon="ui-icon-trash" update="tabla,@form" id="btnEliminar" actionListener="#{usuarioBean.delete()}" ></p:commandButton>
                 </f:facet>
                
-                <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+                <h:panelGrid columns="4" style="margin-bottom:10px" cellpadding="5">
                    
                    <p:outputLabel for="iduser">Id</p:outputLabel>
                    <p:inputText id="iduser" readonly="true" style="width: 100% !important;" value="#{usuarioBean.usuario.iduser}"></p:inputText>
                    
-                    <p:outputLabel for="nombre_usuario">Nombre Usuario</p:outputLabel>
-                    <p:inputText id="nombre_usuario" placeholder="Digite el nombre" style="width: 100% !important;" value="#{usuarioBean.usuario.nombre_usuario}"></p:inputText>
+                    <p:outputLabel for="nombre_usuario">Nombre Y Apellidos</p:outputLabel>
+                    <p:inputText id="nombre_usuario" placeholder="Digite el nombre" style="width: 100% !important;" value="#{usuarioBean.usuario.nombre_usuario}">
+                        <f:validateLength minimum="5" maximum="20" />
+                        <p:message for="nombre_usuario" />
+                    </p:inputText>
                     
-                    <p:outputLabel for="cedula_usuario">Cedula Usuario</p:outputLabel>
-                    <p:inputText id="cedula_usuario" placeholder="Digite la cedula" style="width: 100% !important;" value="#{usuarioBean.usuario.cedula_usuario}"></p:inputText>
+                    <p:outputLabel for="cedula_usuario">Cedula</p:outputLabel>
+                    <p:inputText id="cedula_usuario" placeholder="Digite la cedula" style="width: 100% !important;" value="#{usuarioBean.usuario.cedula_usuario}">
+                        
+                        <p:message for="cedula_usuario" />
+                    </p:inputText>
                     
-                    <p:outputLabel for="correo">Correo</p:outputLabel>
-                    <p:inputText id="correo"  placeholder="Digite el Correo" style="width: 100% !important;" value="#{usuarioBean.usuario.correo}"></p:inputText>
+                    <p:outputLabel for="usuario">Usuario</p:outputLabel>
+                    <p:inputText id="usuario" placeholder="Digite el Usuario" style="width: 100% !important;" value="#{usuarioBean.usuario.correo}">
+                        <f:validateLength minimum="5" maximum="20" />
+                        <p:message for="usuario" />
+                    </p:inputText>
                     
-                    <p:outputLabel for="clave">Clave</p:outputLabel>
-                    <p:inputText id="clave" placeholder="Digite la Clave" style="width: 100% !important;" value="#{usuarioBean.usuario.clave}"></p:inputText>
+                    <p:outputLabel for="clave">Contraseña</p:outputLabel>
+                    <p:inputText id="clave" placeholder="Digite la Clave" style="width: 100% !important;" value="#{usuarioBean.usuario.clave}">
+                        <f:validateLength minimum="4" maximum="15" />
+                        <p:message for="clave" />
+                    </p:inputText>
                     
-                    <p:outputLabel for="estado_usuario">Estado Usuario</p:outputLabel>
-                    <p:inputText id="estado_usuario" placeholder="Digite el estado" style="width: 100% !important;" value="#{usuarioBean.usuario.estado_usuario}"></p:inputText>
-
+                    <p:outputLabel >Estado Usuario</p:outputLabel>
+                    <p:selectOneMenu value="#{usuarioBean.usuario.estado_usuario}" filter="true" filterMatchMode="contains" style="width:250px">
+                        <f:selectItem itemLabel="Seleccione" itemValue="" />
+                        <f:selectItems value="#{estado_usuarioBean.lista}" var="estado_usuario" itemLabel="#{estado_usuario.estado_usuario}" itemValue="#{estado_usuario.estado_usuario}" />
+                    </p:selectOneMenu>
+                    
                 </h:panelGrid>
             </p:panel>
             
